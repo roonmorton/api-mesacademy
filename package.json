@@ -1,0 +1,22 @@
+{
+  "name": "api-mesacademy",
+  "version": "1.0.0",
+  "description": "API MesAcademy ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/roonmorton/api-mesacademy.git"
+  },
+  "author": "Team MesAcademy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/roonmorton/api-mesacademy/issues"
+  },
+  "homepage": "https://github.com/roonmorton/api-mesacademy#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
