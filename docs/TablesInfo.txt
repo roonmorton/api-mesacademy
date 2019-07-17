@@ -1,0 +1,44 @@
+
+
+
+Usuario [Usuarios que podran iniciar sesion]
+Tipo Usuario [Estudiantes, Administradores, Visitantes]
+Autor [Autor de los cursos]
+Curso [Nombre curso, autor, descripcion]
+
+Contenido Curso 
+	[
+		titulo,
+		descripcion,
+		video_url
+	]
+
+Planes 
+	[
+		descripcion de plan
+		periodo /dia/mes/año
+		costo
+	]
+Suscripcion 
+	[
+		Usuario Estudiante poseera suscripcion [Plan]
+		periodo_validez acceso
+			
+	]
+	
+promocion
+	[
+		periodo inicio promocion
+		fin promocion
+		descuento %
+	]
+	
+Pagos
+	[
+		Usuario Estudiante podra hacer pagos,
+		monto pago
+		fecha pago
+		suscripcion cancelar
+		periodo inicio cancelar
+		periodo fin cancelar
+	]
