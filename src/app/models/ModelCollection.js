@@ -2,7 +2,7 @@ const mysqlNackBone = require('mysql-backbone');
 
 module.exports = 
 (con, tableName,idAttribute ='id') =>{
-    return mysqlNackBone.Model.extend(
+    return mysqlNackBone.Collection.extend(
         {
             connection: con,
             tableName: tableName,
