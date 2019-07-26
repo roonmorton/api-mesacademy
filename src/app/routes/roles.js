@@ -1,88 +1,106 @@
-const connectionConfig = require('../../config/connectionConfig');
-const tableName = "TBL_Role";
-const mysql2 = require('mysql');
-
-module.exports = (express, mysql, model, modelCollection) => {
+module.exports = (express, mysql) => {
     const router = express.Router();
 
     /* REST Roles */
     router.route('/roles/:id')
         .get( /* Obtener */
             (req, res) => {
-                let connection = mysql.createConnection(connectionConfig);
-                connection.connect();
-                let Role = model(connection, tableName, 'idRol');
-
-                new Role()
-                    .fetch(req.params.id)
+                //var data = 
+                mysql.find(
+                    {
+                        params: {
+                            id: req.params.id,
+                            fields: '*'
+                        },
+                        tableName: 'TBL_Role',
+                        idAttribute: 'idRol'
+                    } 
+                )
                     .then(
-                        result => {
+                        (result) => {
                             console.log(result);
-                            res.json({
-                                data: [result],
-                                error: 0,
-                                message: 'Success'
-                            });
-                        }
-                    )
+                            res.send(result);
+                        })
                     .catch(
                         err => {
-                            console.log(err.message);
-                            res.json({
-                                data: [],
-                                error: 1,
-                                message: err.message
-                            });
-                        }
-                    );
-                connection.end();
+                            console.log(err);
+                            res.send(err);
+                        });
             }
         )
         .put( /* Actualizar */
             (req, res) => {
-                var connection = mysql.createConnection(connectionConfig);
-                connection.connect();
-                var Role = model(connection, tableName, 'idRol');
-
-                new Role({
-                    name: req.body.name,
-                    description: req.body.description
-                }).save(req.params.id)
+                mysql.save({
+                    obj: {
+                        id: req.params.id,
+                        description: req.body.description,
+                        name: req.body.name
+                    },
+                    tableName: 'TBL_Role',
+                    idAttribute: 'idRol'
+                })
                     .then(
-                        result => {
-                            console.log(result);
-                            res.json({
-                                data: [result],
-                                error: 0,
-                                message: 'Success'
-                            });
-                        }
-                    )
+                        (result) => {
+                            //console.log(fields);
+                            res.send(result);
+                        })
                     .catch(
-                        err => {
+                        (err) => {
                             //console.log(err);
-                            res.json({
-                                data: [],
-                                error: 1,
-                                message: err.message
-                            });
-                        }
-                    );
-                connection.end();
+                            console.log(err);
+                            res.json(err);
+                        });
             }
         ).delete( /* Eliminar */
             (req, res) => {
-                const connection = mysql2.createConnection({
-                    host: 'localhost',
-                    user: 'mesacademy',
-                    password: 'admin',
-                    database: 'mesacademydb'
-                    //database: 'new_test'
-                });
-                connection.connect();
-                const Role = model(connection, tableName, 'idRol');
 
-                new Role().destroy(req.params.id)
+                mysql.delete({
+                    id: req.params.id,
+                    tableName: 'TBL_Role',
+                    idAttribute: 'idRol'
+                }).then(
+                    result => {
+                        console.log(result);
+
+                        res.send(result);
+                    })
+                    .catch(
+                        err => {
+                            console.log(err);
+                            res.send(err.error);
+                        });
+            }
+        );
+
+    router.route('/roles')
+        .get( /* Obtner todo */
+            (req, res) => {
+
+                mysql.query(
+                    "select * from TBL_Role"
+                )
+                .then(
+                    result =>{
+                        console.log(result);
+                        //res.send(result);
+                        res.send(result);
+                    }
+                )
+                .catch(
+                    err => {
+                        console.log(err);
+                        //res.send(err);
+                    }
+                );
+               /* mysql.fetch(
+                    {
+                        tableName: 'TBL_Role',
+                        conditions: {
+                            fields: ["idRol", "description"],
+                            order: 'idRol',
+                            orderDESC: false
+                        }
+                    })
                     .then(
                         result => {
                             console.log(result);
@@ -92,72 +110,32 @@ module.exports = (express, mysql, model, modelCollection) => {
                     .catch(
                         err => {
                             console.log(err);
-                            res.json(err);
-                        }
-                    );
-                /*new Role()
-                    .fetch({
-                        where: "idRol = " + req.params.id
-                    })
-                    .then(
-                        result => {
-                            console.log(result);
-                            res.json(result);
-                        }
-                    )
-                    .catch(
-                        err => {
-                            console.log(err.message);
-                            res.json(err);
+                            res.send(err);
                         }
                     );*/
-                connection.end();
-            }
-        );
-
-    router.route('/roles')
-        .get( /* Obtner todo */
-            (req, res) => {
-                let connection = mysql.createConnection(connectionConfig);
-                connection.connect();
-                let Role = model(connection, tableName, 'idRol');
-                new Role()
-                    .fetch()
-                    .then(
-                        result => {
-                            console.log(result);
-                            res.json(result);
-                        }
-                    )
-                    .catch(
-                        err => {
-                            console.log(err.message);
-                            res.json(err);
-                        }
-                    );
-                connection.end();
             }
         ).post( /* Insertar */
             (req, res) => {
-                let connection = mysql.createConnection(connectionConfig);
-                connection.connect();
-                let Role = model(connection, tableName, 'idRol');
-                new Role()
-                    .create({
-                        name: req.body.name,
-                        description: req.body.description
-                    }).then(
-                        result => {
+
+                mysql.save({
+                    obj: {
+                        description: req.body.description,
+                        name: req.body.name
+                    },
+                    tableName: 'TBL_Role',
+                    idAttribute: 'idRol'
+                })
+                    .then(
+                        (result) => {
+                            //console.log(fields);
                             res.send(result);
-                            //console.log(result);
-                        }
-                    ).catch(
-                        err => {
-                            result.send(err)
+                        })
+                    .catch(
+                        (err) => {
                             //console.log(err);
-                        }
-                    );
-                connection.end();
+                            res.json(err);
+                        });
+
             }
         );
     return router;
