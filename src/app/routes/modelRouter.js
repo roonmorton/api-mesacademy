@@ -1,6 +1,7 @@
-const connectionConfig = require('../../config/connectionConfig');
-const tableName = "TBL_Role";
-
+var tableModel = {
+    tableName: 'TBL_Image',
+    idAttribute: 'idImage'
+};
 module.exports = (express, mysql) => {
     const router = express.Router();
 

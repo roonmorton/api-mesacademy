@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Files NodeJS!</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+</head>
+
+<body>
+    <section class="section">
+        <div class="container">
+            <h1 class="title">
+                Files
+            </h1>
+            <p class="subtitle">
+                Upload File <strong>Node JS</strong>
+            </p>
+            <div class="section container">
+                <nav class="panel">
+                    <p class="panel-heading">
+                        Files
+                    </p>
+                    <div class="panel-block is-centered" style="justify-content: center">
+                        <form method="POST" action="http://localhost:3000/api/images/" enctype="multipart/form-data">
+                            <input type="hidden" value="myvalue" name="test">
+                            <div class="file has-name is-boxed is-primary">
+                                <label class="file-label">
+                                    <input class="file-input" type="file" name="image" id="image" accept=".jpeg,.jpg,.png">
+                                    <span class="file-cta ">
+                                        <span class="file-icon">
+                                            <i class="fas fa-upload"></i>
+                                        </span>
+                                        <span class="file-label">
+                                            Choose a file…
+                                        </span>
+                                    </span>
+                                    <span class="file-name" id="file-name">
+                                        ...
+                                    </span>
+                                </label>
+                            </div>
+                            <br>
+                            <button id="btn-submit" type="submit" class="button is-info is-outlined is-fullwidth">Enviar</button>
+                        </form>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        var file = document.getElementById("image");
+        file.onchange = function () {
+            if (file.files.length > 0) {
+
+                document.getElementById('file-name').innerHTML = file.files[0].name;
+                console.log(file.files[0].name);
+
+            }
+        };
+    </script>
+
+<script
+src="https://code.jquery.com/jquery-3.4.1.min.js"
+integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+crossorigin="anonymous"></script>
+
+<script>
+    $(document).ready(
+    ()=>{
+        $('#btn-submit').click(
+            ()=>{
+                console.log("click");
+                
+            }
+        );
+    });
+</script>
+
+</html>
