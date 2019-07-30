@@ -6,7 +6,7 @@ const env = require('dotenv').config();
 
 /* Configuration */
 
-app.set('port',process.env.PORT || 3000);
+app.set('port',process.env.PORTAPP || 3000);
 
 /* Middlewares */
 
